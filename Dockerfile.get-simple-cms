@@ -12,4 +12,12 @@ ENV GET_SIMPLE_CMS_HOME /var/www/site
 RUN apt-get update \
   && apt-get install -y git
 
+RUN mkdir /Desenv && cd /Desenv \
+    && git clone https://github.com/GetSimpleCMS/GetSimpleCMS.git \
+    && cd GetSimpleCMS \
+    && git checkout tags/v3.3.13 \
+    && du -k | sort -n | tail \
+    && ls -lat \
+    && cp -R /Desenv/GetSimpleCMS/* /var/www/site
+
 CMD [ "/usr/sbin/apache2ctl", "-D", "FOREGROUND" ]
